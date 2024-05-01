@@ -1,6 +1,4 @@
-.vscode/
-a.out
-input
-in
-output.out
+input.in
 runfile
+/.vscode
+/.cph
