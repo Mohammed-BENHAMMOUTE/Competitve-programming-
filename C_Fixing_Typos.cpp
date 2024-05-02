@@ -24,31 +24,22 @@ void solve()
     if(n<=2) {
         cout << s << endl;
         return;
-    }
-    string ans;
-    for(int i = 0; i< n-1; i++) {
-        if(s[i] != s[i+1]){
-            ans.pb(s[i]);
-        };
-        int j = i;
-        while(s[j+1] == s[i]) {
-            j++;
-        };
-        int dist = j -i;
-        if(dist>= 3){
-            ans.pb(s[i]);
-            ans.pb(s[i+1]);
-            i = j;
-            continue;
-        }
-        if(dist == 2){
-            if(j+2<n){
-                
-            }
-        }
     };
-    cout << ans << endl;
-
+    string ans = "";
+    ans += s[0];
+    for(int i=1; i< n-1; i++){
+        if(s[i] == s[i-1] && s[i] == s[i+1]){
+            continue;
+        };
+        ans+=s[i];
+    };
+    ans += s[n-1];
+    for(int i=0; i<ans.size(); i++){
+        if(i +3< ans.size() && ans[i] == ans[i+1] && ans[i+2] == ans[i+3]){
+            ans.erase(ans.begin() +i+2);
+        };
+    };
+    cout << ans<<endl;
 }
 
 int main()
