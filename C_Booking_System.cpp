@@ -9,57 +9,63 @@ using namespace std;
 #define pb push_back
 #define mp make_pair
 const ll MOD = 1e9 + 7;
-
+class group {
+    public :
+    int id;
+    int size;
+    int income;
+};
+class table {
+    public:
+    int id;
+    int size;
+};
+bool byIncomeDescending(const group &g1, const group &g2) {
+    return g1.income> g2.income;
+};
+bool bySize(const table &t1, const table &t2) {
+    return t1.size < t2.size;
+};
+bool canFit(const table &t , const group &g) {
+    return t.size < g.size;
+};
 void fastio()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-}
-
+};
 void solve()
 {
-    int n; cin >> n;// umber o frequests from the evesitors
-    vector<pair<pair<int,int>,int>> cp; // the first is the num of vist // y is the total sum of money 
-    for(int i = 1; i<=n; i++) {
-        int x, y; cin >> x >> y;
-        cp.pb(mp(mp(x, y),i));
+    int n; cin >> n;
+    vector<group> groups(n);
+    for(int i = 0 ; i < n ; i++) {
+        groups[i].id = i+1;
+        cin >> groups[i].size >> groups[i].income;
+    }
+    sort(groups.begin() ,groups.end() , byIncomeDescending);
+    int m; cin >> m;
+    vector<table> tables(m);
+    for(int i = 0; i<m;i++) {
+        tables[i].id = i+1;
+        cin >> tables[i].size;
     };
-    int k; cin >> k;
-    vector<pair<int, int>> table;
-    for(int i = 1; i<=k; i++) {
-        int x; cin >> x;
-        table.pb(mp(x,i));
-    };
-    sort(table.begin(), table.end());
-    sort(cp.begin(), cp.end(), [](const pair<pair<int,int>,int>& a, const pair<pair<int,int>,int>& b){
-        if(a.first.first == b.first.first) {
-            return a.first.second > b.first.second;
-        };
-        return a.first.first > b.first.first;
-    });
-    int requests = 0;
-    int money =  0;
+    sort(tables.begin(), tables.end() ,bySize);
+    int sum =0;
     vector<pair<int, int>> ans;
-    for(pair<int, int> x : table){
-        auto it = upper_bound(cp.begin(), cp.end(), mp(x,0), [](const pair<pair<int,int>,int>& a, const pair<pair<int,int>, int>& b){
-            return a.first.first > b.first.first;
-        });
-        if(it == cp.end()) continue;
-        if(it != cp.begin()){
-            it -=1;
-        }
-        requests++;
-        money += it->first.second;
-        ans.pb(mp(it->second, x.second));
-        cp.erase(it);
+    for(int i =0; i< n ; i++) {
+        auto it =  lower_bound(tables.begin(), tables.end(), groups[i], canFit);
+        if(it != tables.end()) {
+            sum += groups[i].income;
+            ans.push_back({groups[i].id, it->id});
+            tables.erase(it);
+        };
     };
-    cout << requests << " " << money << endl;
-    for(pair<int, int> x : ans) {
-        cout << x.first << " " << x.second << endl;
+    cout << ans.size() << " " << sum << endl;
+    for(auto p : ans) {
+        cout << p.first << " " << p.second << endl;
     };
-}
-
+};
 int main()
 {
     fastio();
