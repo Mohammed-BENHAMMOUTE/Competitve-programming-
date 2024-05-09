@@ -27,7 +27,6 @@ void solve()
     string Katie; cin >> Katie;
     int mxKatie = 0;
     map<char, int> katie;
-
     int m = max(max(Kuro.size(), Shiro.size()), Katie.size());
     for(int i = 0; i< m; i++) {
         if(i < Kuro.size()) {
