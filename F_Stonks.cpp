@@ -21,6 +21,7 @@ void fastio()
     cout.tie(0);
 };
 
+
 void solve()
 {
     int q; cin >> q;
