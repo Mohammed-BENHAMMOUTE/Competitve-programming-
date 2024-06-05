@@ -20,51 +20,34 @@ void fastio()
 void solve()
 {
     int n; cin >> n;
-    vector<ll> v;
-    for(int i = 0; i < n; i++) {
-        ll x; cin >> x;
-        v.pb(x);
-    };
-    if(n == 2) {
-        if(v[0] > v[1]) {
-            cout << "yes" << endl;
-            cout << 1 << " " << 2 << endl;
-        } else {
-            cout << "yes" << endl;
-            cout << 1 << " " << 1 << endl;
-        };
-        return;
+    vector<ll> v(n+1);
+    map<ll, int> m;
+    for(int i = 1; i <=n; i++) {
+        cin >> v[i];
+        m[v[i]] = i;
     };
     vector<ll> copy = v;
     sort(copy.begin(), copy.end());
-    map<ll, int> mp;
-    for(int i = 0; i < n; i++) {
-        mp[copy[i]] = i;
-    };
-    int start = 0, end = 0;
-    for(int i = 0; i < n; i++) {
+    pair<int, int> p;
+    p.first =1;
+    p.second = 1;
+    for(int i = 1; i <= n ; i++) {
         if(v[i] != copy[i]) {
-            start = i;
+            reverse(v.begin()+i, v.begin()+m[copy[i]]+1);
+            p.first = i;
+            p.second = m[copy[i]];
             break;
-        };
+        }
     };
-    for(int i = n-1; i >= 0; i--) {
-        if(v[i] != copy[i]) {
-            end = i;
-            break;
-        };
-    };
-    reverse(v.begin() + start, v.begin() + end + 1);
-    for(int i = 0; i < n; i++) {
+    for(int i = 1; i <= n; i++) {
         if(v[i] != copy[i]) {
             cout << "no" << endl;
             return;
         };
     };
     cout << "yes" << endl;
-    cout << start + 1 << " " << end + 1 << endl;
-    return;
-
+    cout << p.first << " " << p.second << endl;
+    
 }
 
 int main()

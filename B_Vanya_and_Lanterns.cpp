@@ -15,36 +15,28 @@ void fastio()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-}
-
+};
 void solve()
 {
     int n;
     ll l;
     cin >> n >> l;
-    vector<ll> v;
-    bool first = false;
-    bool last = false;
-    for(int i = 0; i<n ;i++) {
-        long double x;
-        cin >> x;
-        if(x == 0) {
-            first = true;
-        };
-        if(x == l) {
-            last = true;
-        };
-        v.pb(x);
+    deque<int> v;
+    for(int i = 0; i < n; i++) 
+    {
+        int x; cin >> x;
+        v.push_back(x);
     };
     sort(v.begin(), v.end());
 
-    double maxDff = 0;
-    for(int i =1; i<n; i++) {
-        maxDff = max(maxDff, (double) (v[i] - v[i-1])/2);
-    };
-    cout << fixed << setprecision(10) << max(maxDff, (double) max(v[0], l-v[n-1])) << endl;
-}
+    double mx = max((double)v[0], (double)(l - v.back()));
 
+    for(int i = 0; i < v.size() - 1; i++) 
+    {
+        mx = max(mx, (v[i+1] - v[i]) / 2.0);
+    };
+    cout << fixed << setprecision(10) << mx << endl;
+};
 int main()
 {
     fastio();
