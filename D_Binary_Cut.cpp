@@ -1,7 +1,12 @@
 #pragma once
+
+/****************************** begin /template.h ******************************/
+
+/*** begin includes ***/
 #include <bits/stdc++.h>
 
 using namespace std;
+
 typedef long long int ll;
 typedef pair<int, int> pi;
 typedef pair<ll, ll> pl;
@@ -42,34 +47,39 @@ template<class T> using func = function<T>;
 
 const int INFI = 1e9 + 5;
 const ll INFL = 1e18 + 5;
+const ld EPS = 1e-9;
+const ll MOD = 1e9 + 7;
+const ld PI = 3.14159265358979323846;
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 auto dist = uniform_int_distribution<int>(0, INFI);
 auto distll = uniform_int_distribution<ll>(0, INFL);
 int rnd() { return dist(rng); }
-ll rndl() { return distll(rng); };
-const ll MOD = 1e9 + 7;
-
+ll rndl() { return distll(rng); }
 
 void solve() {
-    int n; cin >> n;
-    vl a(n);
-    rep(i, n) cin >> a[i];
-    if(n ==2) 
-    {
-        cout << *min_element(all(a)) << endl;
-        return;
+    string s; cin >> s;
+    int n = csz(s);
+    int a[n];
+    rep(i, n) {
+        a[i] = s[i] - '0';
     };
-    ll ans = 0; 
-    for(int i =0; i < n-2; i++)
+    int count  =0;
+    int k=0;
+    rep(i, n)
     {
-        ll c[3];
-        c[0] = a[i];c[1] = a[i+1];c[2] = a[i+2];
-        // what(c[0]);what(c[1]);what(c[2]);
-        sort(c, c+3);
-        ans = max(ans, c[1]);
+        if(i >= 1  && a[i]> a[i-1])
+        {
+            k++;
+        };
+        while(i+1 <n &&a[i] == a[i+1])
+        {
+            i++;
+        };
+        count++;
     };
-    cout << ans << endl;
-
+    // what(k);
+    if(k) count--;
+    cout << count << endl;
 }
 
 int main() {
@@ -81,3 +91,4 @@ int main() {
     }
     BYEBYE
 }
+/****************************** end /template.h ******************************/

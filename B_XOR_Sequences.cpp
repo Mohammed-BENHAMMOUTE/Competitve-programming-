@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define endl '\n'
+#define tc     \
+    ll tc;     \
+    cin >> tc; \
+    while (tc--)
+#define pb push_back
+#define mp make_pair
+const ll MOD = 1e9 + 7;
+
+void fastio()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+};
+ll longest_common_subsegment(ll x, ll y) {
+    ll z = x ^ y; 
+
+    
+    ll trailing_zeros = 0;
+    while ((z & 1) == 0 && z != 0) {
+        z >>= 1;
+        trailing_zeros++;
+    }
+
+    
+    return 1 << trailing_zeros;
+}
+
+void solve()
+{
+    ll x,y;cin >> x >>y;
+    cout << longest_common_subsegment(x,y) << endl;
+}
+
+int main()
+{
+    fastio();
+    ll t;
+    cin >> t;
+    for (ll i = 1; i <= t; i++)
+    {
+        solve();
+    }
+
+    return 0;
+}
