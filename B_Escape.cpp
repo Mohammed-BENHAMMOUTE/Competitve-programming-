@@ -229,32 +229,10 @@ auto dist = uniform_int_distribution<int>(0, INFI);
 auto distll = uniform_int_distribution<ll>(0, INFL);
 int rnd() { return dist(rng); }
 ll rndl() { return distll(rng); }
-bool valid(ll x , ll y, ll n ,ll m){
-    return(x >=1 && x <=n) && (y >=1 && y<=m);
-}
 
 void solve() {
-    ll n, m; cin >> n >> m;
-    ll xc,yc; cin >>xc >> yc;
-    int k; cin >> k;
-    vector<pair<ll,ll>> v;
-    for(int i=0; i< k; i++)
-    {
-        ll x,y; cin >> x >> y;
-        v.pb(mp(x,y));
-    };
-    // coutarrP(v);
-    ll ans = 0;
-    for(auto z : v){
-        for(ll cof = 11000000000; cof ; cof/=2){
-            while(valid(xc + cof*z.first, yc + cof * z.second , n, m)){
-                xc += cof * z.first;
-                yc += cof * z.second;
-                ans += cof;
-            };
-        }
-    };
-    cout << ans << endl;
+    int vp, vd, t,f,c;cin >> vp >> vd >> t >> f >> c;
+    
 }
 
 int main() {

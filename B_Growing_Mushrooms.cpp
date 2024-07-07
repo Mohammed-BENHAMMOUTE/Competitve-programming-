@@ -229,32 +229,23 @@ auto dist = uniform_int_distribution<int>(0, INFI);
 auto distll = uniform_int_distribution<ll>(0, INFL);
 int rnd() { return dist(rng); }
 ll rndl() { return distll(rng); }
-bool valid(ll x , ll y, ll n ,ll m){
-    return(x >=1 && x <=n) && (y >=1 && y<=m);
-}
 
 void solve() {
-    ll n, m; cin >> n >> m;
-    ll xc,yc; cin >>xc >> yc;
-    int k; cin >> k;
-    vector<pair<ll,ll>> v;
-    for(int i=0; i< k; i++)
+    int n,t1,t2,k; cin >> n >> t1 >> t2 >> k;
+    double per = k/100.00;
+    vector<pair<double, int>> v;
+    for(int i = 1; i <= n ; i++){
+        double ans;
+        int x,y; cin >> x >> y;
+        ans = max(x*t1*(1-per) + y*t2,t1*y*(1-per)+ x*t2 );
+        v.push_back(make_pair(ans,n- i));
+    };
+    sort(all(v));
+    for(int i = n-1; i>=0;i--)
     {
-        ll x,y; cin >> x >> y;
-        v.pb(mp(x,y));
-    };
-    // coutarrP(v);
-    ll ans = 0;
-    for(auto z : v){
-        for(ll cof = 11000000000; cof ; cof/=2){
-            while(valid(xc + cof*z.first, yc + cof * z.second , n, m)){
-                xc += cof * z.first;
-                yc += cof * z.second;
-                ans += cof;
-            };
-        }
-    };
-    cout << ans << endl;
+        cout << n-v[i].second << " " <<fixed << setprecision(2)<< v[i].first << endl;
+    }
+    return;
 }
 
 int main() {
