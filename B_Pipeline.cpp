@@ -15,6 +15,7 @@ void fastio()
     cin.tie(0);
     cout.tie(0);
 };
+
 static long long eSUM(ll n) {
     // cout << n*(n+1)/2 << endl;
     return (n*(n+1))/2;

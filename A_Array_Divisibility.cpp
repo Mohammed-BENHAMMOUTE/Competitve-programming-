@@ -19,25 +19,12 @@ void fastio()
 
 void solve()
 {
-    int x,y; cin >> x >> y;
-    int ans = 0;
-    if(x == 0 && y ==0){
-        cout << 0 << endl;
-        return;
-    }
-    while(x != 0 || y != 0)
-    {
-        int page = 15;
-        int min_y = min(2, y);
-        page -= 4*min_y;
-        y -= min_y;
-        int min_x = min(x, page);
-        page -= min_x;
-        x -= min_x;
-        ans++;
-    }
-    cout << ans <<endl;
-}   
+    int n;cin >> n;
+    for(int i =1; i<=n; i++) {
+        cout << i << " ";
+    };
+    cout << endl;
+}
 
 int main()
 {
