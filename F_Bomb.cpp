@@ -237,44 +237,32 @@ int rnd() { return dist(rng); }
 ll rndl() { return distll(rng); }
 
 void solve() {
-    int n;cin >> n;
-    vi v(n);
-    cinarr(v);
-    int i = n-1;
-    while(i > 0)
-    {
-        if(v[i] >= v[i-1]){
-            i--;
-            continue;
-        }else{
-            if(v[i-1]<=9){
-                cout << "NO" << endl;
-                return;
-            }else{
-                string s = to_string(v[i-1]);
-                vi t;
-                for(char x : s){
-                    if(x-'0' > v[i]){
-                        cout << "NO" << endl;
-                        return;
-                    }
-                    t.push_back(x-'0');
-                };
-                if(t[0] > t[1]){
-                    cout << "NO" << endl;
-                    return;
-                }
-                v.erase(v.begin() + i-1);
-                v.insert(v.begin() + i-1, t.begin() , t.end());
-                i-=1;
-                n = v.size();
-            };
-        }
+    int n; cin >> n; 
+    ll k ; cin >> k;
+    priority_queue<pair<ll, int>> q;
+    vl a;
+    vl b;
+    for(int i = 0; i < n ;i++){
+        ll h; cin >> h;
+        a.pb(h);
+        q.push(mp(h,i));
     };
-    cout << "YES"<<endl;
-
-
-
+    for(int i = 0; i < n ; i++){
+        ll h; cin >> h;
+        b.pb(h);
+    };
+    ll score = 0;
+    while(k > 0){
+        pair<ll,int> temp = q.top();
+        q.pop();
+        if(temp.first == 0){
+            cout << score << endl;
+            return;
+        };
+        score += temp.first;
+        ll n = max(0LL, (temp.first - b[temp.second]));
+        q.push(mp(n, temp.second));
+    };
 }
 
 int main() {

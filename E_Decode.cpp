@@ -237,44 +237,21 @@ int rnd() { return dist(rng); }
 ll rndl() { return distll(rng); }
 
 void solve() {
-    int n;cin >> n;
-    vi v(n);
-    cinarr(v);
-    int i = n-1;
-    while(i > 0)
-    {
-        if(v[i] >= v[i-1]){
-            i--;
-            continue;
-        }else{
-            if(v[i-1]<=9){
-                cout << "NO" << endl;
-                return;
-            }else{
-                string s = to_string(v[i-1]);
-                vi t;
-                for(char x : s){
-                    if(x-'0' > v[i]){
-                        cout << "NO" << endl;
-                        return;
-                    }
-                    t.push_back(x-'0');
-                };
-                if(t[0] > t[1]){
-                    cout << "NO" << endl;
-                    return;
-                }
-                v.erase(v.begin() + i-1);
-                v.insert(v.begin() + i-1, t.begin() , t.end());
-                i-=1;
-                n = v.size();
-            };
-        }
+    string s; cin >> s; int n = s.size();
+    vi pref(n+1);
+    ll ans = 0;
+    map<ll, ll > tot_sum;
+    pref[0] = 0;
+    for(int i = 0; i < n ; i++){
+        pref[i+1] = pref[i] + ((s[i]-'0')== 0?-1:1);
     };
-    cout << "YES"<<endl;
-
-
-
+    for(int i = 0; i <= n ; i++) {
+        ans+=tot_sum[pref[i]]*(n+1-i);
+        tot_sum[pref[i]]+=i+1;
+        ans = (ans%MOD + MOD)%MOD;
+    };
+    cout << ans << endl;
+    return;
 }
 
 int main() {

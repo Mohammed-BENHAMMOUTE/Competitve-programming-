@@ -237,43 +237,32 @@ int rnd() { return dist(rng); }
 ll rndl() { return distll(rng); }
 
 void solve() {
-    int n;cin >> n;
-    vi v(n);
-    cinarr(v);
-    int i = n-1;
-    while(i > 0)
-    {
-        if(v[i] >= v[i-1]){
-            i--;
-            continue;
-        }else{
-            if(v[i-1]<=9){
-                cout << "NO" << endl;
-                return;
-            }else{
-                string s = to_string(v[i-1]);
-                vi t;
-                for(char x : s){
-                    if(x-'0' > v[i]){
-                        cout << "NO" << endl;
-                        return;
-                    }
-                    t.push_back(x-'0');
-                };
-                if(t[0] > t[1]){
-                    cout << "NO" << endl;
-                    return;
-                }
-                v.erase(v.begin() + i-1);
-                v.insert(v.begin() + i-1, t.begin() , t.end());
-                i-=1;
-                n = v.size();
-            };
+    int a , b ,c; cin >> a >> b >> c;
+    queue<tuple<int,int,int>> q;
+    set<pair<int , int>> visited;
+    q.push({0,0,0});
+
+    while(!q.empty()){
+        auto [x , y , steps] = q.front();
+        q.pop();
+        if(x == c || y == c) {
+            cout << steps << endl;
+            return;
         }
+        vector<pair<int,int>> next = {
+            {a,y} , {x, b},
+            {0 , y} , {x , 0},
+            {min(x+y, a) , max(0, x+y-a)},
+            {max(0, y+x-b) , min(b, x+y)}
+        };
+        for(auto [nx, ny] : next) {
+            if(visited.find({nx ,ny}) == visited.end()) {
+                visited.insert({nx , ny});
+                q.push({nx, ny, steps+1});
+            };
+        };
     };
-    cout << "YES"<<endl;
-
-
+    cout << -1 << endl;
 
 }
 

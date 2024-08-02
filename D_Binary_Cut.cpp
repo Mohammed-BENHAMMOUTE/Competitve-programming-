@@ -77,7 +77,6 @@ void solve() {
         };
         count++;
     };
-    // what(k);
     if(k) count--;
     cout << count << endl;
 }

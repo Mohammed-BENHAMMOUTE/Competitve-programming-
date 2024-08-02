@@ -15,12 +15,13 @@ void fastio()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
+    return ;
 }
 
 void solve()
 {
     int a,b,c,d;
-    cin >> a >> b >> c >>d;
+    cin >> a >> ++b >> c >>d;
     int sum1 = a, sum2 = c;
     int ans =0;
     if(a<= c) {

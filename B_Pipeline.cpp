@@ -17,7 +17,7 @@ void fastio()
 };
 
 static long long eSUM(ll n) {
-    // cout << n*(n+1)/2 << endl;
+    cout << n*(n+1)/2 << endl;
     return (n*(n+1))/2;
 };
 static long long SumIndex(ll n, ll i) {

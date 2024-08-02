@@ -236,46 +236,32 @@ auto distll = uniform_int_distribution<ll>(0, INFL);
 int rnd() { return dist(rng); }
 ll rndl() { return distll(rng); }
 
-void solve() {
-    int n;cin >> n;
-    vi v(n);
-    cinarr(v);
-    int i = n-1;
-    while(i > 0)
-    {
-        if(v[i] >= v[i-1]){
-            i--;
-            continue;
-        }else{
-            if(v[i-1]<=9){
-                cout << "NO" << endl;
-                return;
-            }else{
-                string s = to_string(v[i-1]);
-                vi t;
-                for(char x : s){
-                    if(x-'0' > v[i]){
-                        cout << "NO" << endl;
-                        return;
-                    }
-                    t.push_back(x-'0');
-                };
-                if(t[0] > t[1]){
-                    cout << "NO" << endl;
-                    return;
-                }
-                v.erase(v.begin() + i-1);
-                v.insert(v.begin() + i-1, t.begin() , t.end());
-                i-=1;
-                n = v.size();
-            };
-        }
-    };
-    cout << "YES"<<endl;
-
-
-
+void fastio()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
 }
+
+void solve()
+{
+    string s;
+    cin >> s;
+
+    for(int i = 0; i < s.size() - 1; i++) {
+        if(s[i] == s[i + 1]) {
+            s.insert(s.begin() + i + 1, s[i] == 'z' ? 'a' : 'z');
+            cout << s << endl;
+            return;
+        }
+    }
+
+    // If no consecutive characters are found, add a character to the back
+    s.push_back(s[s.size() - 1] == 'z' ? 'a' : 'z');
+    cout << s << endl;
+};
+
+
 
 int main() {
     GOGOGO

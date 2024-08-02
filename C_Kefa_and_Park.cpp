@@ -237,52 +237,57 @@ int rnd() { return dist(rng); }
 ll rndl() { return distll(rng); }
 
 void solve() {
-    int n;cin >> n;
-    vi v(n);
-    cinarr(v);
-    int i = n-1;
-    while(i > 0)
-    {
-        if(v[i] >= v[i-1]){
-            i--;
-            continue;
-        }else{
-            if(v[i-1]<=9){
-                cout << "NO" << endl;
-                return;
-            }else{
-                string s = to_string(v[i-1]);
-                vi t;
-                for(char x : s){
-                    if(x-'0' > v[i]){
-                        cout << "NO" << endl;
-                        return;
-                    }
-                    t.push_back(x-'0');
-                };
-                if(t[0] > t[1]){
-                    cout << "NO" << endl;
-                    return;
-                }
-                v.erase(v.begin() + i-1);
-                v.insert(v.begin() + i-1, t.begin() , t.end());
-                i-=1;
-                n = v.size();
-            };
+    int n, m;
+    cin >> n >> m;
+    
+    vector<int> cats(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> cats[i];
+    }
+    
+    vector<vector<int>> adj(n + 1);
+    for (int i = 0; i < n - 1; i++) {
+        int x, y;
+        cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    
+    queue<pair<int, int>> q;
+    vector<bool> visited(n + 1, false);
+    
+    q.push({1, cats[1]}); 
+    visited[1] = true;
+    
+    int count = 0;
+    
+    while (!q.empty()) {
+        int vertex = q.front().first;
+        int consecutive_cats = q.front().second;
+        q.pop();
+        
+        if (consecutive_cats > m) continue; // Skip if too many consecutive cats
+        
+        // If it's a leaf (restaurant) and we haven't exceeded the cat limit
+        if (adj[vertex].size() == 1 && vertex != 1) {
+            count++;
         }
-    };
-    cout << "YES"<<endl;
-
-
-
+        
+        for (int neighbor : adj[vertex]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                
+                int new_consecutive_cats = cats[neighbor] ? consecutive_cats + 1 : 0;
+                q.push({neighbor, new_consecutive_cats});
+            }
+        }
+    }
+    
+    cout << count << endl;
 }
 
 int main() {
     GOGOGO
-    int t;
-    cin >> t;
-    while (t--) {
-        solve();
-    }
+    solve();
     BYEBYE
 }
