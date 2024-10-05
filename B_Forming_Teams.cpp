@@ -17,21 +17,49 @@ void fastio()
     cout.tie(0);
 }
 
-void solve()
-{
+int dfs(int u , vector<vector<int>> &adj , vector<int> &colors , int color) {
+    colors[u] = color;
+    int ans = 0;
+    for(auto v : adj[u]) {
+        if(colors[v] == -1){
+            colors[v] = 1 - color;
+            ans += dfs(v, adj, colors, 1 - color);
+        }else{
+            if(colors[v] == color) ans++;
+        }
+    }
+    return ans;
+}
+
+
+void solve() {
     int n, m; cin >> n >> m;
-    
+    vector<vector<int>> adj(n+1);
+    vector<int> colors(n+1, -1);
+    for(int i =0; i < m; i++) {
+        int u, v; cin >> u >> v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+    int ans = 0;
+    for(int i = 1; i <= n; i++) {
+        if(colors[i] == -1) {
+            ans += dfs(i, adj, colors, 0);
+        }
+    }
+    ans = ans/2;
+    int left = n - ans;
+    if(left % 2 == 0) {
+        cout << ans << endl;
+    }else{
+        cout << ans + 1 << endl;
+    }
 }
 
 int main()
 {
     fastio();
-    ll t;
-    cin >> t;
-    for (ll i = 1; i <= t; i++)
-    {
-        solve();
-    }
+    solve();
 
     return 0;
 }

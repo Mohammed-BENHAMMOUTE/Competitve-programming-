@@ -35,6 +35,7 @@ void solve()
     int ans = 0;
     while(!q1.empty() && !q2.empty()) {
         int x = q1.front();
+        
         int y = q2.front();
         q1.pop();
         q2.pop();
