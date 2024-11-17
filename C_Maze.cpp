@@ -58,8 +58,6 @@ void solve()
         cout << a[i] << endl;
     }
     return;
-
-
 }
 
 int main()
