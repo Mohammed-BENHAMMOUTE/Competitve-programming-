@@ -10,6 +10,7 @@ using namespace std;
     ll tc;     \
     cin >> tc; \
     while (tc--)
+    
 #define pb push_back
 #define mp make_pair
 const ll MOD = 1e9 + 7;
