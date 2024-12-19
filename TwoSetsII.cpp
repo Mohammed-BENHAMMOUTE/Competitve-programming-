@@ -14,7 +14,7 @@ int modInverse(int a, int m) {
         t = x0;
         x0 = x1 - q * x0;
         x1 = t;
-    }
+    -}
     if (x1 < 0) x1 += m0;
     return x1;
 }
