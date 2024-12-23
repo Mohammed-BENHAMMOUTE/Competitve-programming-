@@ -240,23 +240,38 @@ void solve() {
     int n;cin >> n;
     vl b(n);
     cinarr(b);
-    vector<int> prefixe(n);
-    vector<int> suffixe(n);
-    for(int i =0 ; i < n ;i++) {
+    vector<ll> prefixe(n);
+    vector<ll> suffixe(n);
+    // for(int i =0 ; i < n ;i++) {
+    //     prefixe[i] = b[i] + i;
+    //     suffixe[i] = b[i] -i;
+    // };
+    // for(int i = 1; i < n; i++) {
+    //     prefixe[i] = max(prefixe[i-1], prefixe[i]);
+    // };
+    // for(int i = n-2; i >=0 ;i--) {
+    //     suffixe[i] = max(suffixe[i+1], suffixe[i]);
+    // };
+    // ll ans = 0;
+    // for(int i =1 ; i < n-1; i++) {
+    //     ans = max(ans, prefixe[i-1] + suffixe[i+1]+ b[i]);
+    // };
+    // cout<<ans<<endl;
+    for(int i =0 ; i < n; i++){
         prefixe[i] = b[i] + i;
         suffixe[i] = b[i] -i;
     };
-    for(int i = 1; i < n; i++) {
+    for(int i =1 ; i < n; i++){
         prefixe[i] = max(prefixe[i-1], prefixe[i]);
     };
-    for(int i = n-2; i >=0 ;i--) {
+    for(int i =n-2; i >=0 ; i--){
         suffixe[i] = max(suffixe[i+1], suffixe[i]);
     };
     ll ans = 0;
-    for(int i =1 ; i < n-1; i++) {
-        ans = max(ans, prefixe[i-1] + suffixe[i+1]+ b[i]);
+    for(int i =1 ; i < n-1 ;i++){
+        ans = max(ans, b[i] + prefixe[i-1]+suffixe[i+1]);
     };
-    cout<<ans<<endl;
+    cout << ans << endl;
 }
 
 int main() {
