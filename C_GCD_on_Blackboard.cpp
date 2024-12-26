@@ -12,8 +12,8 @@ using namespace std;
 const ll MOD = 1e9 + 7;
 
 
-long long prefixe[MAXN];
-long long suffixe[MAXN];
+// long long prefixe[MAXN];
+// long long suffixe[MAXN];
 
 ll gcd(ll a, ll b)
 {
@@ -33,28 +33,35 @@ void fastio()
 
 void solve() {
     int n; cin >> n;
-    vector<long long> a(n);
-    for(int i =0; i < n ; i++) {
+    vector<ll> a(n);
+    for(int i = 0; i < n ; i++) {
         cin >> a[i];
     };
+    vector<ll> prefixe(n+1, 0);
+    vector<ll> suffixe(n+1, 0);
+    for(int i =1 ; i <= n; i++) {
+        prefixe[i] = gcd(a[i-1], prefixe[i-1]);
+    };
+    for(int i =n-1 ; i >=0 ; i--) {
+        suffixe[i] = gcd(suffixe[i+1], a[i]);
+    };
 
-
-    prefixe[0] = a[0];
-    suffixe[n-1] = a[n-1];
-    for(int i = 1 ; i < n ; i++) 
-    {
-        prefixe[i] = gcd(prefixe[i-1], a[i]);
+    ll ans = 0;
+    int ind = -1;
+    for(int i =1; i <= n; i++) {
+        if(ans < gcd(prefixe[i-1], suffixe[i+1])){
+            ans = gcd(prefixe[i-1], suffixe[i+1]);
+            ind  = i -1;
+        }
     };
-    for(int i = n-2; i >=0; i--){
-        suffixe[i] = gcd(suffixe[i+1],a[i]);
-    };
-    ll ans = max(prefixe[n-2], suffixe[1]);
-    for(int i = 0; i < n-1; i++)
-    {
-        ans = max(ans, gcd(prefixe[i-1], suffixe[i+1]));
-    };
-    cout << ans << endl;
-    return;
+    cout << ans <<endl;
+    for(int i = 0; i < n ; i++){
+        if(i!= ind){
+            cout << a[i] << " ";
+        }else{
+            cout << ans << " ";
+        }
+    }
 };
 
 
