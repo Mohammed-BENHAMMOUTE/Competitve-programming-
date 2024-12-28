@@ -78,7 +78,6 @@ void solve() {
     };
     cout << ans << endl;
 }
-
 int main() {
     fastIO();
     int t = 1;
