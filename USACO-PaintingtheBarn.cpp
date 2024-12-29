@@ -67,43 +67,35 @@ void fastIO() {
     //     freopen("error.txt", "w", stderr);
     // #endif
 }
+const int WIDTH = 1000;
+
 
 void solve() {
-    int n, k; cin >> n >> k;
-    // debug(n);
-    vector<array<int, 4>> arr(n);
-    int mx = 0;
-    for(int i =0 ; i < n ;i++){
-        cin >> arr[i][0] >> arr[i][1] >> arr[i][2] >> arr[i][3];
-        mx = max ({
-            arr[i][0],
-            arr[i][1],
-            arr[i][2],
-            arr[i][3],
-        });
+    int n , k; cin >> n >> k;
+    int barn[WIDTH][WIDTH];
+    for(int  i =0 ; i < n ; i++) {
+        int x1,y1 , x2, y2; cin >> x1 >> y1 >> x2 >> y2;
+        barn[x1][y1]++;
+        barn[x2][y1]--;
+        barn[x1][y2]--;
+        barn[x2][y2]++;
     };
-    vector<vector<int>> grid(mx+1, vector<int>(mx+1, 0));
-    for(int i = 0; i < n; i++){
-        int startx = arr[i][0];
-        int starty = arr[i][1];
-        int endx = arr[i][2];
-        int endy = arr[i][3];
-        for(int currx = startx; currx < endx; currx++){
-            for(int curry = starty; curry < endy; curry++){
-                grid[currx][curry] += 1;
-            }
+    int res = 0;
+    for(int i =0 ; i< WIDTH; i++) {
+        for(int j = 0; j < WIDTH ; j++) {
+            if(i > 0) barn[i][j]+= barn[i-1][j];
+            if(j > 0) barn[i][j] += barn[i][j-1];
+            if(i > 0  && j > 0) {
+                barn[i][j] -= barn[i-1][j-1];
+            };
+            res += barn[i][j] ==k;
         }
-    }
-    int ans = 0;
-    for(int i = 1; i <= mx ; i++) {
-        for(int j = 0; j <= mx ; j++) {
-            if(grid[i][j] == k){
-                ans++;
-            }
-        }
-    }
-    cout << ans << endl;
+    };
+    cout << res <<endl;
 }
+
+
+
 
 int main() {
     fastIO();
