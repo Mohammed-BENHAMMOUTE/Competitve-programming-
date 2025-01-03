@@ -21,7 +21,7 @@ public:
         int count = 0;
         for(int i = 0; i < n-1; i++) {
             if(pre[i+1] >= suf[i+1]) {
-                count++;
+                count++;DimState, DimCountry, DimArea
             }
         }
         return count;
