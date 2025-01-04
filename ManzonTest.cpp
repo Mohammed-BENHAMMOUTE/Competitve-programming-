@@ -7,12 +7,10 @@ int getMaximumCategoryMaxCount(const string &categories) {
     int n = categories.size();
     int freq[26] = {0};
     int maxCounts[26] = {0};
-    // freqCount array to track how many letters have each frequency
     int *freqCount = new int[n + 1]();
     freqCount[0] = 26; 
     int maxFreq = 0;
 
-    // For each prefix ending at i
     for(int i = 0; i < n; i++) {
         int idx = categories[i] - 'a';
         int oldFreq = freq[idx];
@@ -26,7 +24,6 @@ int getMaximumCategoryMaxCount(const string &categories) {
             maxFreq = newFreq;
         }
         
-        // Update maxCounts
         if(freqCount[maxFreq] == 1) {
             maxCounts[idx]++;
         } else {
@@ -37,8 +34,6 @@ int getMaximumCategoryMaxCount(const string &categories) {
             }
         }
     }
-
-    // Find result
     int result = 0;
     for(int i = 0; i < 26; i++) {
         result = max(result, maxCounts[i]);
@@ -54,4 +49,3 @@ int main() {
     cout << getMaximumCategoryMaxCount(categories) << endl;
     return 0;
 }
-// ...existing code...
