@@ -21,7 +21,7 @@ public:
             }
         }
         return connectedComponents;   
-    }
+    };
 private:
     void dfs(vector<vector<int>>& v , int i , vector<int>& visited){
         int n  = v.size();
@@ -30,6 +30,6 @@ private:
             if(v[i][j] == 1 && !visited[j]){
                 dfs(v, j , visited);
             }
-        }
-    }
+        };
+    };
 };
