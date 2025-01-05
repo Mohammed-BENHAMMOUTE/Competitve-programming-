@@ -20,8 +20,7 @@ public:
                 dfs(isConnected , i , visited);
             }
         }
-        return connectedComponents;
-        
+        return connectedComponents;   
     }
 private:
     void dfs(vector<vector<int>>& v , int i , vector<int>& visited){
