@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-01-12 16:56:03
+ * Created: 2025-01-12 19:43:38
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -68,49 +68,36 @@ void fastIO() {
     // #endif
 }
 
-struct guest {
-    int start;
-    int finish;
-    guest(int st , int ed) : start(st) , finish(ed) {};
-    // bool operator<(const guest& g) {
-    //     if(start g.start)
-    // } 
-};
-
-
-// we need to find out the maximum number of costumers at any given time 
 void solve() {
-    int n; cin >> n;
-    vector<int> times;
-    vector<pair<int,int>> customers;
+    int n; cin >>n ;
+    vector<pair<ll,ll>> vec;
+    for(int   i =0; i < n; i++){
+        ll x, y; cin>>x>>y;
+        vec.push_back({x,y});
+    }
+    sort(all(vec));
+    vector<ll> prefix(n+1, 0);
+    vector<ll> suffixe(n+1, 0);
+    for(int  i =0 ; i < n ; i++){
+        if(i == 0) {
+            prefix[i+1] = vec[i].second - vec[i].first;
+        }else {
+            prefix[i+1] = prefix[i] + vec[i].second - max(vec[i].first, vec[i-1].second); 
+        }
+    }
+    for(int  i =n-1 ; i >= 0 ; i--){
+        if(i == n-1){
+            suffixe[i] = vec[i].second - vec[i].first;
+        }else{
+            suffixe[i] = suffixe[i+1]-vec[i].first + min(vec[i].second, vec[i+1].first);
+        }
+    }
+    ll ans = 0;
 
-    for(int i =0 ; i < n ; i++){
-        int a,b;
-        cin >> a >> b;
-        times.push_back(a);
-        times.push_back(b);
-        customers.push_back({a, b});
+    for(int i =0 ; i < n ; i++) {
+        ans = max(ans, prefix[i] + suffixe[i+1]);
     }
-    sort(times.begin() , times.end());
-    map<int, int> compress;
-    for(int  i= 0 ; i < 2*n ; i++) {
-        compress[times[i]] = i;
-    }
-    vector<int> count(times.size());
-    for(auto [in, out] : customers) {
-        count[compress[in]]++;
-        count[compress[out]]--;
-    }
-    int current = 0, ans = 0;
-    for(int x :count) {
-        current += x;
-        ans = max(ans, current);
-    }
-    cout << ans <<endl;
-    // for(int i =0 ; i < 2*n ; i++){
-    //     cout << count[i] << " ";
-    // };
-    // cout << endl;
+    cout <<ans <<endl;
 }
 
 int main() {
