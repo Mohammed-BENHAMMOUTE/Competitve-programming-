@@ -68,32 +68,21 @@ void fastIO() {
     // #endif
 }
 
-struct guest {
-    int start;
-    int finish;
-    guest(int st , int ed) : start(st) , finish(ed) {};
-    // bool operator<(const guest& g) {
-    //     if(start g.start)
-    // } 
-};
-
-
-// we need to find out the maximum number of costumers at any given time 
 void solve() {
     int n; cin >> n;
     vector<int> times;
     vector<pair<int,int>> customers;
 
-    for(int i =0 ; i < n ; i++){
-        int a,b;
+    for(int i = 0; i < n; i++) {
+        int a, b;
         cin >> a >> b;
         times.push_back(a);
         times.push_back(b);
         customers.push_back({a, b});
     }
-    sort(times.begin() , times.end());
+    sort(times.begin(), times.end());
     map<int, int> compress;
-    for(int  i= 0 ; i < 2*n ; i++) {
+    for(int i = 0; i < 2*n; i++) {
         compress[times[i]] = i;
     }
     vector<int> count(times.size());
@@ -102,15 +91,11 @@ void solve() {
         count[compress[out]]--;
     }
     int current = 0, ans = 0;
-    for(int x :count) {
+    for(int x : count) {
         current += x;
         ans = max(ans, current);
     }
-    cout << ans <<endl;
-    // for(int i =0 ; i < 2*n ; i++){
-    //     cout << count[i] << " ";
-    // };
-    // cout << endl;
+    cout << ans << endl;
 }
 
 int main() {
