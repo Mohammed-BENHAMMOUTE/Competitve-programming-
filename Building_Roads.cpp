@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-01-20 11:04:02
+ * Created: 2025-01-24 21:10:48
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -61,44 +61,50 @@ void fastIO() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     cout << fixed << setprecision(10);
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
-        freopen("error.txt", "w", stderr);
-    #endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    //     freopen("error.txt", "w", stderr);
+    // #endif
 }
-
-class Solution {
-public: 
-    vector<int> topologicalSort(vector<vector<int>> &adj){
-        int n = adj.size();
-        priority_queue<int, vector<int> , greater<int>> pq;
-        vector<bool> visited(n, false);
-        vector<int> inDegree(n, 0);
-        for(int i =0 ; i < n ; i++) {
-            for(int j = 0; j < adj[i].size() ; j++){
-                inDegree[adj[i][j]]++;
-            }
-        };
-        for(int i =0 ; i < n ;i++){
-            if(inDegree[i] == 0) pq.push(i);
-        }
-        for(int i =0 ; i < n ; i++){
-            inDegree[i] = adj[i].size();
-        }
-        vector<int> ans;
-        while(!pq.empty()){
-            int current = pq.top();
-            pq.pop();
-            
-            for(int i = 0; i < adj[current].size() ; i++){
-                adj[current][i]--;
-                if(inDegree[adj[current][i]] == 0){
-                    pq.push(adj);
-                }
-            }
+void dfs(int current, vector<bool> &visited , vector<vector<int>> &adj){
+    visited[current] = true;
+    for(int neighbour : adj[current]) {
+        if(!visited[neighbour]) {
+            dfs(neighbour , visited , adj);
         }
     }
-private:
-    void KahnAlgorithm(int s , vector<int> &adj , vector<int> &visited , ){}
+}
+void solve() {
+    int n , m; cin >> n >>m;
+    vector<vector<int>> adj(n+1);
+    for(int i = 0 ; i < m; i++) {
+        int u, v; cin >> u >> v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+    vector<int> cities;
+    vector<bool> visited(n, false);
+    for(int i =1 ;i <= n ; i++){
+        if(!visited[i]){
+            cities.pb(i);
+            dfs(i , visited , adj);
+        }
+    };
+    sort(all(cities));
+    int ans = cities.size() -1;
+    cout << ans << endl;
+    for(int i  = 1 ; i < ans +1 ; i++){
+        cout << cities[i] << " " << cities[i-1] <<endl;
+    }
+}
+    
+
+int main() {
+    fastIO();
+    int t = 1;
+    while(t--) {
+        solve();
+    }
+    return 0;
 }
