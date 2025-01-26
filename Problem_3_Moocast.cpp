@@ -6,8 +6,8 @@ struct Cow {
 };
 
 int main() {
-    freopen("moocast.in", "r", stdin);
-    freopen("moocast.out", "w", stdout);
+    // freopen("moocast.in", "r", stdin);
+    // freopen("moocast.out", "w", stdout);
     
     int N;
     cin >> N;
