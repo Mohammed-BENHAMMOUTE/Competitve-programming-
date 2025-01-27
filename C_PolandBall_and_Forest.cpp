@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-01-26 23:07:45
+ * Created: 2025-01-27 21:48:36
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -61,43 +61,54 @@ void fastIO() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     cout << fixed << setprecision(10);
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    //     freopen("error.txt", "w", stderr);
+    // #endif
 }
 
-const int SZ =2e5;
-vector<int> adj[SZ+1];
-int subtrees[SZ+1];
-int depth[SZ];
 
+const int SZ = 1e5;
+vector<int> children[SZ];
+int visited[SZ];
+int csd = 0;
 
-
-void dfs_size(int source) {
-    subtrees[source] = 1;
-    for(int child : adj[source]){
-        depth[child] = 1 + depth[source];
-        dfs_size(child);
-        subtrees[source] += subtrees[child];
+void dfs(int source , int parent){
+    visited[source] = 1;
+    for(int x : children[source]){
+        if(!visited[x]) {
+            dfs(x, source);
+        }
     }
 }
 
-void solve(){
+
+void solve() {
     int n; cin >> n;
-    vector<int> vet(n);
-    int index = -1;
-    for(int i =2 ; i <= n ; i++){
-        int boss; cin >> boss;
-        adj[boss].pb(i);
-    };
-    dfs_size(1);
-    for(int i =1 ; i <= n ; i++) {
-        cout << subtrees[i]-1 << " ";
+    csd = 0;
+    for(int i =0 ; i < n ; i++) {
+        children[i].clear();
+        visited[i] = false;
     }
-    cout << endl;
+    for(int i =0 ; i < n ; i++){
+        int relative; cin >> relative;
+        children[i].pb(--relative);
+        children[relative].pb(i);
+    }
+    for(int i = 0; i < n ; i++){
+        if(visited[i] == 0) {
+            dfs(i, -1);
+            csd++;
+        }
+    }
+    cout << csd << endl;
 }
-
 
 int main() {
     fastIO();
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }
