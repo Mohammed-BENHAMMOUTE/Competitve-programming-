@@ -37,7 +37,7 @@ public:
                 }
             }
         }
-        if(result.size() != n) {
+        if(result.size() != n) { // cycle
             return {}; 
         }
 
