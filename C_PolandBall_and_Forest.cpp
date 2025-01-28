@@ -69,10 +69,13 @@ void fastIO() {
 }
 
 
+
 const int SZ = 1e5;
 vector<int> children[SZ];
 int visited[SZ];
 int csd = 0;
+
+
 
 void dfs(int source , int parent){
     visited[source] = 1;
@@ -105,10 +108,11 @@ void solve() {
     cout << csd << endl;
 }
 
+
+
 int main() {
     fastIO();
     int t = 1;
-    // cin >> t;
     while(t--) {
         solve();
     }
