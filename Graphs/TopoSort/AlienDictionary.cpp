@@ -71,5 +71,4 @@ public:
         }
         return ans;
     }
-
-}
+};
