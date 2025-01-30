@@ -3,12 +3,8 @@
 #define fastio                        \
     ios_base::sync_with_stdio(false); \
     cin.tie(NULL)
-
 #define endl "\n"
-
 using namespace std;
-
-
 class Solution {
     private: 
     vector<int> topoSort(int V, vector<int> adj[])
@@ -33,7 +29,6 @@ class Solution {
             int node = q.front();
             q.pop();
             topo.push_back(node);
-
             for(auto it : adj[node])
             {
                 indegree[it]--;
@@ -42,7 +37,6 @@ class Solution {
         }
         return topo;
     };
-
 public:
     string findOrder(string dict[] , int N, int K)
     {
@@ -53,7 +47,6 @@ public:
             string s1 = dict[i];
             string s2 = dict[i+1];
             int len = min(s1.size(), s2.size());
-
             for(int ptr = 0; ptr < len ; ptr++)
             {
                 if(s1[ptr] != s2[ptr])
