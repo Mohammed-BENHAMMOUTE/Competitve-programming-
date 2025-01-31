@@ -37,7 +37,7 @@ public:
         for(int i = 0; i < n; i++){
             dist[i] = INT_MAX;
         }
-        dist[0] = 0;
+        dist[src]= 0;
         while(!st.empty()){
             int node = st.top();
             st.pop();
@@ -48,7 +48,8 @@ public:
                     dist[v] = dist[node] + weight;
                 }
             }
-        }
+        };
+        
         for( int i =0 ; i < n ; i++){
             if(dist[i] == INT_MAX){
                 dist[i] = -1;   
