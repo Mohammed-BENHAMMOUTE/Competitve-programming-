@@ -1,20 +1,15 @@
 #include <bits/stdc++.h>
-
 #define fastio                        \
     ios_base::sync_with_stdio(false); \
     cin.tie(NULL)
-
 #define endl "\n"
 using namespace std;
-
-
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         vector<vector<pair<int,int>>> adj(n);
-        // Build adjacency list
         for(const auto& time : times) {
-            int u = time[0] - 1;  
+            int u = time[0] - 1;
             int v = time[1] - 1;
             int w = time[2];
             adj[u].push_back({v, w});
