@@ -5,16 +5,13 @@
     cin.tie(NULL)
 
 #define endl "\n"
-
 using namespace std;
-
 class Solution {
      int findCheapestFlight(int n, vector<vector<int>> &adj, int src, int dst, int k) {
         vector<vector<pair<int, int>>> adj2(n);
         for (auto it : adj) {
             adj2[it[0]].push_back({it[1], it[2]});
         }
-
         vector<int> distances(n, INT_MAX);
         distances[src] = 0;
         priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
