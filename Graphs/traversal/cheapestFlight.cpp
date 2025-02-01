@@ -41,4 +41,4 @@ class Solution {
         }
         return distances[dst] == INT_MAX ? -1 : distances[dst];
     }
-}
+};
