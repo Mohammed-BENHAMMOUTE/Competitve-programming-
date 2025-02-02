@@ -5,9 +5,9 @@
     cin.tie(NULL)
 
 #define endl "\n"
-const int MOD = 1e9 + 7;
 
 using namespace std;
+const int MOD  = 1e9 + 7;
 class Solution {
 public:
     int countPaths(int n, const vector<vector<int>>& roads) {
@@ -25,7 +25,8 @@ public:
         
         dist[0] = 0;
         ways[0] = 1;
-        pq.push({0, 0});
+        pq.push({0, 0}); // {distance, node}
+        
         while(!pq.empty()) {
             auto [d, u] = pq.top();
             pq.pop();
