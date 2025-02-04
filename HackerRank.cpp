@@ -14,35 +14,81 @@ using namespace std;
 
 using namespace std;
 
-long long maxGrossValue(const vector<int>& arr) {
-    int n = arr.size();
-    vector<long long> P(n + 2, 0);
-    P[1] = 0;
-    for (int i = 1; i <= n; i++) {
-        P[i + 1] = P[i] + arr[i - 1];
-    }
-    vector<long long> A(n + 2, numeric_limits<long long>::min());
-    A[1] = P[1];
-    for (int i2 = 2; i2 <= n + 1; i2++) {
-        A[i2] = max(A[i2 - 1], P[i2 - 1]);
-    }
-    vector<long long> B(n + 2, numeric_limits<long long>::min());
-    B[n + 1] = numeric_limits<long long>::min(); 
-    for (int i2 = n; i2 >= 1; i2--) {
-        B[i2] = max(P[i2 + 1], B[i2 + 1]);
-    }
-    
-    long long best = numeric_limits<long long>::min();
-    for (int i2 = 2; i2 <= n; i2++) {
-        long long candidate = A[i2] - P[i2] + B[i2];
-        best = max(best, candidate);
-    }
-    return 2LL * best - P[n + 1];
+// C++ program to find maximum triplet sum
+#include <bits/stdc++.h>
+using namespace std;
+
+// Utility function to get the lower last min
+// value of 'n'
+int getLowValue(set<int>& lowValue, int& n)
+{
+    auto it = lowValue.lower_bound(n);
+
+    // Since 'lower_bound' returns the first
+    // iterator greater than 'n', thus we
+    // have to decrement the pointer for
+    // getting the minimum value
+    --it;
+
+    return (*it);
 }
 
+// Function to calculate maximum triplet sum
+int maxTripletSum(int arr[], int n)
+{
+    // Initialize suffix-array
+    int maxSuffArr[n + 1];
 
-int main() {
-    vector<int> arr = {-5, 3, 9,4};
-    cout << maxGrossValue(arr) << endl;
+    // Set the last element
+    maxSuffArr[n] = 0;
+
+    // Calculate suffix-array containing maximum
+    // value for index i, i+1, i+2, ... n-1 in
+    // arr[i]
+    for (int i = n - 1; i >= 0; --i)
+        maxSuffArr[i] = max(maxSuffArr[i + 1], arr[i]);
+
+    int ans = 0;
+
+    // Initialize set container
+    set<int> lowValue;
+
+    // Insert minimum value for first comparison
+    // in the set
+    lowValue.insert(INT_MIN);
+
+    for (int i = 0; i < n - 1; ++i) {
+        if (maxSuffArr[i + 1] > arr[i]) {
+            int left = getLowValue(lowValue, arr[i]);
+            if (left == INT_MIN) {
+                // Insert arr[i] in set<> for further
+                // processing
+                lowValue.insert(arr[i]);
+                continue;
+            }
+            ans = max(ans,
+                      left + arr[i] + maxSuffArr[i + 1]);
+
+            // Insert arr[i] in set<> for further
+            // processing
+            lowValue.insert(arr[i]);
+        }
+    }
+    return ans;
+}
+
+// Driver code
+int main()
+{
+    int arr[] = {-1, 1, -2,-2};
+    int n = 4;
+
+    cout << maxTripletSum(arr, n);
     return 0;
 }
+
+// int main() {
+//     vector<int> arr = {-5, 3, 9,4};
+//     cout << maxGrossValue(arr) << endl;
+//     return 0;
+// }
