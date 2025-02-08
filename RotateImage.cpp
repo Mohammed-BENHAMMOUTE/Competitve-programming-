@@ -5,7 +5,6 @@
     cin.tie(NULL)
 
 #define endl "\n"
-
 using namespace std;
 
 class Solution {
