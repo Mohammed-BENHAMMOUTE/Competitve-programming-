@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-02-16 11:15:53
+ * Created: 2025-02-16 12:28:17
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -67,9 +67,10 @@ void fastIO() {
         freopen("error.txt", "w", stderr);
     #endif
 }
+
 void solve() {
     int n; cin >> n;
-    
+
 }
 
 int main() {

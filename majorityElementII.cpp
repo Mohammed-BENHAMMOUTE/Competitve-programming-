@@ -1,9 +1,7 @@
 #include <bits/stdc++.h>
-
 #define fastio                        \
     ios_base::sync_with_stdio(false); \
     cin.tie(NULL)
-
 #define endl "\n"
 using namespace std;
 
@@ -40,5 +38,3 @@ vector<int> majorityElement(vector<int>& nums) {
         if (count2 > n / 3) ans.push_back(candidate2);
         return ans;
 }
-
-

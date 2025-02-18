@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-02-16 11:15:53
+ * Created: 2025-02-17 10:02:38
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -61,15 +61,38 @@ void fastIO() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     cout << fixed << setprecision(10);
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
-        freopen("error.txt", "w", stderr);
-    #endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    //     freopen("error.txt", "w", stderr);
+    // #endif
 }
+
 void solve() {
-    int n; cin >> n;
-    
+    int n; cin >>n;
+    vector<int> a;
+    int count0 = 0;
+    for(int i =0 ; i < n ; i++){
+        int x;cin >>x;
+        if(x == 1) {
+            a.push_back(i);
+            count0++;
+        }
+    };
+    if(count0 == 0){
+        cout << 0 << endl;
+        return;
+    }else if (count0 == 1)
+    {
+        cout<<1<<endl;
+        return;
+    }
+    ll ans = 1 ;
+    for(int i =0 ; i < a.size()-1; i++) {
+        ans*=(a[i+1] - a[i]);
+    }
+    cout << ans << endl;
+    return;
 }
 
 int main() {
@@ -79,7 +102,5 @@ int main() {
     while(t--) {
         solve();
     }
-    fclose(stdin);
-    fclose(stdout);
     return 0;
 }
