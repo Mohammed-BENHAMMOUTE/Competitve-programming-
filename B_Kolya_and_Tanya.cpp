@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-02-20 23:21:52
+ * Created: 2025-02-23 13:45:01
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -61,45 +61,26 @@ void fastIO() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     cout << fixed << setprecision(10);
-}
-void dfs(int node, vector<bool>& visited, vector<vector<int>>& adj, int& size) {
-    visited[node] = true;
-    size++;
-    for(int next : adj[node]) {
-        if(!visited[next]) {
-            dfs(next, visited, adj, size);
-        }
-    }
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+        freopen("error.txt", "w", stderr);
+    #endif
 }
 
 void solve() {
-    int n ,m; cin >> n >> m;
-    vector<vector<int>> adj(n , vector<int>(n+1 , 0));
-    for(int i =0 ;i < m ; i++) {
-        int x , y; cin >> x >> y;
-        x--;y--;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
-    }
-    vector<bool> visited(n, false);
-    vector<int> component_sizes;
-
-    for(int i = 0; i < n; i++) {
-        if(!visited[i]) {
-            int size = 0;
-            dfs(i, visited, adj, size);
-            component_sizes.push_back(size);
-        }
-    }
-    ll res =1;
-    for(int i =0 ; i < component_sizes.size() ; i++) {
-        res*= pow(2 , component_sizes[i] -1);
-    }
-    cout << res << endl;
+    ll n; cin >> n;
+    ll res = 1;
+    ll res1 = modpow<ll>(3LL, n*3, MOD);
+    ll res2 = modpow<ll>(7LL, n, MOD);
+    cout << mod<ll>(res1-res2 , MOD) << endl;
+    return;
 }
+
 int main() {
     fastIO();
     int t = 1;
+    // cin >> t;
     while(t--) {
         solve();
     }
