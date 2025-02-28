@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-02-28 09:28:06
+ * Created: 2025-02-28 10:17:54
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -69,57 +69,32 @@ void fastIO() {
 }
 
 void solve() {
-    string s; cin >> s;
-    int n = s.size();
-    
-    // If string length is less than 26, it can't have a valid substring
-    if(n < 26) {
-        cout << -1 << endl;
+    int n , k; cin >> n >> k;
+    vector<vector<char>> grid(n , vector<char>(n , 'S'));
+    int max_islands = (n * n + 1) / 2;
+
+    if(k > max_islands){
+        cout << "NO" <<endl;
         return;
     }
-    
-    // Check each possible substring of length 26
-    for(int start = 0; start <= n - 26; start++) {
-        vector<int> charCount(26, 0);
-        vector<int> missingPos;
-        
-        // Count characters in this substring
-        for(int i = 0; i < 26; i++) {
-            int pos = start + i;
-            if(s[pos] == '?') {
-                missingPos.push_back(pos);
-            } else {
-                charCount[s[pos] - 'A']++;
+
+    for(int i =0 ;i < n ; i++){
+        for(int j = i%2 ; j < n ; j+=2){
+            if(k > 0) {
+                grid[i][j] = 'L';
+                k--;
             }
-        }
-        
-        // Check if we can form a valid substring
-        bool possible = true;
-        vector<char> charsToFill;
-        
-        for(int i = 0; i < 26; i++) {
-            if(charCount[i] > 1) {
-                possible = false;
-                break;
-            } else if(charCount[i] == 0) {
-                charsToFill.push_back('A' + i);
-            }
-        }
-        if(possible && charsToFill.size() == missingPos.size()) {
-            for(int i = 0; i < missingPos.size(); i++) {
-                s[missingPos[i]] = charsToFill[i];
-            }
-            for(int i = 0; i < n; i++) {
-                if(s[i] == '?') {
-                    s[i] = 'A';
-                }
-            }
-            cout << s << endl;
-            return;
         }
     }
-    cout << -1 << endl;
+    cout << "YES" <<endl;
+    for(int i =0 ; i < n ; i++){
+        for(int j = 0; j < n ; j++){
+            cout << grid[i][j];
+        }
+        cout << endl;
+    }
 }
+
 int main() {
     fastIO();
     int t = 1;
