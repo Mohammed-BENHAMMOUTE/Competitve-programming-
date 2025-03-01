@@ -61,11 +61,11 @@ void fastIO() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     cout << fixed << setprecision(10);
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
-        freopen("error.txt", "w", stderr);
-    #endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    //     freopen("error.txt", "w", stderr);
+    // #endif
 }
 void dfs(int source, vector<bool>& visited, vector<vector<int>>& adj, vector<int>& connected){
     visited[source] = true;
@@ -90,11 +90,9 @@ void solve() {
             vector<int> connectComp;
             dfs(i, visited, adj, connectComp);
             
-            // Number of edges in complete graph is n*(n-1) when counting from both ends
             long long expectedEdges = (long long)connectComp.size() * (connectComp.size() - 1);
             long long actualEdges = 0;
             
-            // Count actual edges in this component
             for(int node : connectComp) {
                 actualEdges += adj[node].size();
             }
