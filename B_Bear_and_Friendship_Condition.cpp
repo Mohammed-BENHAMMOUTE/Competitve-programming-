@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-02-28 10:17:54
+ * Created: 2025-03-01 11:07:11
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -45,7 +45,7 @@ const int dy[8] = {0,0,1,-1,1,-1,1,-1};
 
 // Utility functions
 template<typename T> inline T gcd(T a, T b) {return b ? gcd(b, a%b) : a;}
-template<typename T> inline T lcm(T a, T b) {return a * (b/gcd(a,b));}
+template<typename T> inline T lcm(T a, T b) {return (a / gcd(a,b)) * b;}
 template<typename T> inline T mod(T a, T b) {return (a%b + b)%b;}
 template<typename T> inline T modpow(T a, T b, T m) {T r=1; while(b) {if(b&1) r=r*a%m; a=a*a%m; b>>=1;} return r;}
 
@@ -67,34 +67,46 @@ void fastIO() {
         freopen("error.txt", "w", stderr);
     #endif
 }
-
+void dfs(int source, vector<bool>& visited, vector<vector<int>>& adj, vector<int>& connected){
+    visited[source] = true;
+    connected.push_back(source);
+    for(int x : adj[source]){
+        if(!visited[x]){
+            dfs(x, visited, adj, connected);
+        }
+    }
+}
 void solve() {
-    int n , k; cin >> n >> k;
-    vector<vector<char>> grid(n , vector<char>(n , 'S'));
-    int max_islands = (n * n + 1) / 2;
-
-    if(k > max_islands){
-        cout << "NO" <<endl;
-        return;
-    };
-    
-    for(int i =0 ;i < n ; i++){
-        for(int j = i%2 ; j < n ; j+=2){
-            if(k > 0) {
-                grid[i][j] = 'L';
-                k--;
+    int n, m; cin >> n >> m;
+    vector<vector<int>> adj(n);
+    for(int i = 0; i < m; i++){
+        int a, b; cin >> a >> b; a--; b--;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    vector<bool> visited(n, false);
+    for(int i = 0; i < n; i++) {
+        if(!visited[i]) {
+            vector<int> connectComp;
+            dfs(i, visited, adj, connectComp);
+            
+            // Number of edges in complete graph is n*(n-1) when counting from both ends
+            long long expectedEdges = (long long)connectComp.size() * (connectComp.size() - 1);
+            long long actualEdges = 0;
+            
+            // Count actual edges in this component
+            for(int node : connectComp) {
+                actualEdges += adj[node].size();
+            }
+            
+            if(actualEdges != expectedEdges) {
+                cout << "NO" << endl;
+                return;
             }
         }
     }
-    cout << "YES" <<endl;
-    for(int i =0 ; i < n ; i++){
-        for(int j = 0; j < n ; j++){
-            cout << grid[i][j];
-        }
-        cout << endl;
-    }
+    cout << "YES" << endl;
 }
-
 int main() {
     fastIO();
     int t = 1;

@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-02-28 10:17:54
+ * Created: 2025-02-28 16:50:37
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -69,31 +69,35 @@ void fastIO() {
 }
 
 void solve() {
-    int n , k; cin >> n >> k;
-    vector<vector<char>> grid(n , vector<char>(n , 'S'));
-    int max_islands = (n * n + 1) / 2;
-
-    if(k > max_islands){
-        cout << "NO" <<endl;
-        return;
-    };
-    
-    for(int i =0 ;i < n ; i++){
-        for(int j = i%2 ; j < n ; j+=2){
-            if(k > 0) {
-                grid[i][j] = 'L';
-                k--;
-            }
+    int a , x , y; cin >> a >> x >> y;
+    if(abs(x) >= a || y <= 0 || y%a == 0) {
+        cout << -1 << endl;return;
+    }
+    int etage = y / a;
+    if(etage == 0) {
+        if(abs(x)* 2>= a){
+            cout << -1  << endl;return;
+        }else{
+            cout << 1 <<endl;return;
         }
     }
-    cout << "YES" <<endl;
-    for(int i =0 ; i < n ; i++){
-        for(int j = 0; j < n ; j++){
-            cout << grid[i][j];
+    if(etage %2 == 0){
+        if(x == 0){
+            cout << -1 << endl;return;
         }
-        cout << endl;
+        if(x < 0){
+            cout << (etage/2)*3 << endl;return;
+        }else{
+            cout << (etage/2)*3 +1 << endl;return;
+        }
+    }else{
+        if(abs(x)*2>= a){
+            cout << -1 << endl;return;
+        }else {
+            cout << 2 + ((etage -1)/2) * 3 <<endl; return;
+        }
     }
-}
+};
 
 int main() {
     fastIO();

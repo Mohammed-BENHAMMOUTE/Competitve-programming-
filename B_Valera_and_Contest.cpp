@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-02-28 10:17:54
+ * Created: 2025-03-01 00:07:12
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -69,30 +69,28 @@ void fastIO() {
 }
 
 void solve() {
-    int n , k; cin >> n >> k;
-    vector<vector<char>> grid(n , vector<char>(n , 'S'));
-    int max_islands = (n * n + 1) / 2;
-
-    if(k > max_islands){
-        cout << "NO" <<endl;
-        return;
-    };
-    
-    for(int i =0 ;i < n ; i++){
-        for(int j = i%2 ; j < n ; j+=2){
-            if(k > 0) {
-                grid[i][j] = 'L';
-                k--;
-            }
+    int n ,k ,l ,r, sa , sk; cin >> n >> k >> l >> r >> sa >>sk;
+    vector<int> a;
+    int remainder = sk % k;
+    for( int i =0 ; i < k ; i++)
+    {
+        int ai = sk / k + (remainder >0);
+        a.push_back(ai);
+        remainder--;
+    }
+    if(n > k){
+        remainder = (sa - sk) % (n-k);
+        for(int i =0 ; i < n - k; i++)
+        {
+            int ai = (sa - sk) / (n-k) + (remainder>0);
+            remainder--;
+            a.push_back(ai);
         }
     }
-    cout << "YES" <<endl;
-    for(int i =0 ; i < n ; i++){
-        for(int j = 0; j < n ; j++){
-            cout << grid[i][j];
-        }
-        cout << endl;
+    for(int i =0 ; i < n ;i++){
+        cout << a[i] << " ";
     }
+    cout << endl;
 }
 
 int main() {
