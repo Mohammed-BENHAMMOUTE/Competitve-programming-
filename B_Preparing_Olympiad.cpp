@@ -75,18 +75,14 @@ void solve() {
     for(int i =0 ; i < n ; i++){
         cin >> weights[i];
     };
-    // sort(all(weights));
     int count = 0;
 
-    // now we will go through all possible subsets using bitmask
     for(int mask = 1 ; mask < (1 << n) ; mask++){
         bitset<15> bit(mask);
         if(bit.count() >= 2){
             ll sum = 0;
             ll minVal = LLONG_MAX;
             ll maxVal = LLONG_MIN;
-
-            // CALCUATE sum, min and max for current subset
             for(int i =0 ; i < n ; i++ ){
                 if(bit[i])
                 {
