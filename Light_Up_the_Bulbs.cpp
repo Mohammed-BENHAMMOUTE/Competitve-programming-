@@ -34,7 +34,6 @@ public:
     }
 };
 
-
 void solve() {
     int n ;cin >> n;
     vector<pair<int,int>> points(n);
