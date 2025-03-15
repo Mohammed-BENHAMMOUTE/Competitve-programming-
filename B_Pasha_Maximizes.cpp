@@ -2,6 +2,7 @@
  * Author: Mohammed BENHAMMOUTE
  * Created: 2025-02-19 20:57:47
  */
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -97,7 +98,6 @@ void solve() {
 int main() {
     fastIO();
     int t = 1;
-    // cin >> t;
     while(t--) {
         solve();
     }
