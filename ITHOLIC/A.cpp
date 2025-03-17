@@ -59,14 +59,8 @@ void fastIO() {
 
 void solve() {
     string s; cin >> s;
-    // string sorted = s;
-    // sort(sorted.rbegin() , sorted.rend());
-    // if(sorted == s){
-
-    // }
     bitset<5> bits(0);
     int n = s.size(); 
-    // int minResut = INT_MIN;
     ll sum = 0;
     for(int i = n-1; i >= 0 ; i--) {
         int indx = s[i] - 'A';
