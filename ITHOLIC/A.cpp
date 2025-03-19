@@ -50,70 +50,75 @@ void fastIO() {
     cin.tie(nullptr);
     cout.tie(nullptr);
     cout << fixed << setprecision(10);
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    //     freopen("error.txt", "w", stderr);
-    // #endif
 }
 
 void solve() {
     string s; cin >> s;
-    bitset<5> bits(0);
-    int n = s.size(); 
-    ll sum = 0;
-    for(int i = n-1; i >= 0 ; i--) {
-        int indx = s[i] - 'A';
-        bool flag = false;
-        for(int j = 4 ; j > indx ; j--){
-            if(bits[j] == 1){
-                sum -= pow(10 , indx);
-                flag = true;
+    int n = s.size();
+    
+    vector<ll> powers = {1, 10, 100, 1000, 10000};
+
+    ll original_score = 0;
+    vector<bool> seen(5, false);
+    
+    for (int i = n-1; i >= 0; i--) {
+        int digit = s[i] - 'A';
+        bool negative = false;
+        
+        for (int j = 4; j > digit; j--) {
+            if (seen[j]) {
+                negative = true;
                 break;
             }
         }
-        if(!flag){
-            sum += pow(10, indx);
+        
+        if (negative) {
+            original_score -= powers[digit];
+        } else {
+            original_score += powers[digit];
         }
-        bits[indx] = 1;
+        
+        seen[digit] = true;
     }
-    bitset<5> elements(0);
-    ll minel = 0;
-    for(int i = n-1; i >= 0 ; i--) {
-        int indx = s[i] - 'A';
-        ll num = 0;
-        bool flag = false;
-        for(int j = 4 ; j > indx ; j--){
-            if(elements[j] == 1){
-                num = -pow(10 , indx);
-                flag = true;
-                break;
+    
+    ll max_score = original_score;
+    
+    for (int i = 0; i < n; i++) {
+        int original_digit = s[i] - 'A';
+        
+        for (int new_digit = 0; new_digit < 5; new_digit++) {
+            if (new_digit == original_digit) continue;
+            
+            string modified = s;
+            modified[i] = 'A' + new_digit;
+            
+            ll score = 0;
+            vector<bool> seen(5, false);
+            
+            for (int j = n-1; j >= 0; j--) {
+                int digit = modified[j] - 'A';
+                bool negative = false;
+                
+                for (int k = 4; k > digit; k--) {
+                    if (seen[k]) {
+                        negative = true;
+                        break;
+                    }
+                }
+                
+                if (negative) {
+                    score -= powers[digit];
+                } else {
+                    score += powers[digit];
+                }
+                
+                seen[digit] = true;
             }
+            
+            max_score = max(max_score, score);
         }
-        if(!flag){
-            num = pow(10, indx);
-        }
-        elements[indx] = 1;
-        minel = min(minel , num);
     }
-    // cout << minel << endl;
-    sum -= minel ;
-    if(minel != 0) {
-        sum += pow(10 ,4);
-    }else{
-        ll temp = 0 ;
-        ll clone = sum ; 
-        for( int i=0 ; i<n ; ++i ){
-            if( s[i] != 'E' ){
-                // cout << "test " << temp << "  " << sum ; 
-                ll num = pow( 10 , 4 ) - pow( 10 , s[i] - 'A')  ; 
-                sum = max( sum , (clone  + num - temp) ) ;   
-                temp += pow( 10 , s[i] - 'A' ) ; 
-            }
-        }
-       
-     }
-    cout<< sum << endl;
+    cout << max_score << endl;
 }
 
 int main() {
