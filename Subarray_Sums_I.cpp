@@ -72,8 +72,26 @@ void solve() {
     ll n , x; cin >> n >> x;
     vl a(n);
     rep(i , 0, n) cin >> a[i];
-    // we need to count the subb arrays with sum equal to x
-    // how can we do that ?
+    
+    // how can we solve this ?
+    // Given an array of n positive integers, your task is to count the number of subarrays having sum x.
+    // we need to keep both right and left at the vecinity of a window with sum as close as possible to x
+    // so what do we have to do ?
+    // we start from right = 0 and we keep dragging the left pointer with us such that it is as close as possible to 
+    // the the sub array with size k
+    int left = 0;
+    ll ans = 0;
+    ll sum = 0;
+    rep(right , 0 , n){
+        sum += a[right];
+        while(sum >x && left <= right) {
+            sum -= a[left++];
+        }
+        if(sum == x) {
+            ans++;
+        }
+    };
+    cout << ans << endl;
 }
 
 int main() {
