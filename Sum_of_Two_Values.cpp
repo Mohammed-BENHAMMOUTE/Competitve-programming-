@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-03-19 20:13:36
+ * Created: 2025-03-20 19:38:54
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -69,59 +69,38 @@ void fastIO() {
 }
 
 void solve() {
-    int n ,m ; cin >> n >>m;
-    // we need the first row where all its elements are less than other rows ?
-    // how can i check for that  ? 
-    vector<vector<int>> grid(n, vector<int>(m));
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            cin >> grid[i][j];
-        }
-    }
+    int n , x; cin >> n >> x;
 
-    // Create a vector of indices for the rows
-    vector<int> row_indices(n);
-    for (int i = 0; i < n; i++) {
-        row_indices[i] = i;
+    vector<pair<ll, int>> a;
+    rep(i , 0 , n) {
+        int x; cin >>x;
+        a.push_back({x , i+1});
     }
+    sort(all(a));
 
-    // Sort rows by comparing their minimum  elements
-    sort(all(row_indices), [&](int a, int b) {
-        int max_a = *min_element(all(grid[a]));
-        int max_b = *min_element(all(grid[b]));
-        return max_a < max_b;
-    });
-    // we have to check here if all elements of row is less than the elements of row +1 after sorting
-    for(int i = 0 ; i < n-1 ; i++){
-        int current = row_indices[i];
-        int next = row_indices[i+1];
-        bool valid = true;
-        
-        for(int j = 0; j < m; j++) {
-            if(grid[current][j] >= grid[next][j]) {
-                valid = false;
-                break;
-            }
-        }
-        
-        if(!valid) {
-            cout << -1 << endl;
+    int left = 0 , right =n-1 , curr;
+    while(left < right) 
+    {
+        curr = a[left].first + a[right].first;
+        if(curr == x) 
+        {
+            cout << a[right].second << " " << a[left].second << endl;
             return;
         }
+        else if (curr > x)
+        {
+            right--;
+        }else{
+            left++;
+        }
     }
-
-
-    // The first row with all elements less than other rows would be the first in sorted order
-    for(int i =0 ; i < n ; i++) {
-        cout << row_indices[i] +1 << " ";
-    }
-    cout << endl;
+    cout <<"IMPOSSIBLE" <<endl;
 }
 
 int main() {
     fastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         solve();
     }
