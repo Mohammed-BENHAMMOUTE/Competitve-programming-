@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-03-20 19:59:50
+ * Created: 2025-03-22 06:35:23
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -69,24 +69,39 @@ void fastIO() {
 }
 
 void solve() {
-    ll n , x; cin >> n >> x;
-    vl a(n);
-    rep(i , 0, n) cin >> a[i];
-    int left = 0;
-    ll ans = 0;
-    ll sum = 0;
-    rep(right , 0 , n){
-        sum += a[right];
-        while(sum >x && left <= right) {
-            sum -= a[left++];
-        }
-        if(sum == x) {
-            ans++;
-        }
-    };
-    cout << ans << endl;
+    ll n, k; cin >> n >> k;
+    ll  x, a, b ,c;
+    cin >> x >> a >>b >>c;
+    vector<ll> aa(n);
+    aa[0] =x;
+    ll prevx = x;
+    // deque<ll> dq;
+    for(int i = 1; i < n; i++) {
+        aa[i] = (prevx * a + b) % c;  // Use modulo c here
+        prevx = aa[i];
+    }
+    deque<int> dq;  // Store indices
+    for(int i = 0; i < k; i++) {
+        while(!dq.empty() && aa[dq.back()] >= aa[i])
+            dq.pop_back();
+        dq.push_back(i);
+    }
+    ll xorans = aa[dq.front()];
+    
+    for(int i = k; i < n; i++) {
+        // Remove elements outside the window
+        if(!dq.empty() && dq.front() <= i-k)
+            dq.pop_front();
+            
+        // Regular processing
+        while(!dq.empty() && aa[dq.back()] >= aa[i])
+            dq.pop_back();
+        dq.push_back(i);
+        
+        xorans ^= aa[dq.front()];
+    }
+    cout << xorans << endl;
 }
-
 
 int main() {
     fastIO();
