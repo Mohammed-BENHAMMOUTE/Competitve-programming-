@@ -1,7 +1,4 @@
-/*
- * Author: Mohammed BENHAMMOUTE
- * Created: 2025-03-29 03:01:54
- */
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -68,20 +65,32 @@ void fastIO() {
     #endif
 }
 
+const int maxN = 1e5+1;
 void solve() {
-    ll n , s; cin >> n >> s;
+    ll n, k; cin >> n >> k;
     vl a(n);
-    rep(i , 0 , n ) cin >> a[i];
-    ll left = 0 , sum = 0 , ans = 0;
-    for(int right =0 ; right < n ; right++) 
+    rep(i , 0 , n) cin >> a[i];
+    vi b(maxN);
+    ll un = 0 , ans = 0, left = 0;
+    for(int right = 0; right < n ; right++)
     {
-        sum += a[right];
-        while(sum - a[left] >= s) {
-            sum -= a[left++];
+        if(b[a[right]] == 0){
+            un++;
         }
-        if(sum >=s) 
+        b[a[right]]++;
+        while(un > k){
+            if(b[a[left]] == 1)
+            {
+                un--;
+                b[a[left++]]--;
+            }else
+            {
+                b[a[left++]]--;
+            }
+        }
+        if(un <= k)
         {
-            ans+= left+1;
+            ans += right  -left +1;
         }
     }
     cout << ans << endl;
@@ -90,7 +99,6 @@ void solve() {
 int main() {
     fastIO();
     int t = 1;
-    // cin >> t;
     while(t--) {
         solve();
     }

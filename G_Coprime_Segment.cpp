@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-03-29 03:01:54
+ * Created: 2025-03-31 04:51:36
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -69,22 +69,31 @@ void fastIO() {
 }
 
 void solve() {
-    ll n , s; cin >> n >> s;
-    vl a(n);
-    rep(i , 0 , n ) cin >> a[i];
-    ll left = 0 , sum = 0 , ans = 0;
-    for(int right =0 ; right < n ; right++) 
-    {
-        sum += a[right];
-        while(sum - a[left] >= s) {
-            sum -= a[left++];
-        }
-        if(sum >=s) 
-        {
-            ans+= left+1;
+    int n; cin >> n;
+    vector<long long> a(n);
+    for(int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    
+    int ans = INT_MAX;
+    
+    for(int right = 0; right < n; right++) {
+        stack<pair<int, long long>> st; // pairs of (position, gcd)
+        long long current_gcd = a[right];
+        
+        for(int left = right; left >= 0; left--) {
+            if(left < right) {
+                current_gcd = gcd(current_gcd, a[left]);
+            }
+            
+            if(current_gcd == 1) {
+                ans = min(ans, right - left + 1);
+                break; 
+            }
         }
     }
-    cout << ans << endl;
+    
+    cout << (ans == INT_MAX ? -1 : ans) << endl;
 }
 
 int main() {

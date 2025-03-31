@@ -1,6 +1,6 @@
 /*
  * Author: Mohammed BENHAMMOUTE
- * Created: 2025-03-29 03:01:54
+ * Created: 2025-03-30 01:14:16
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -69,23 +69,48 @@ void fastIO() {
 }
 
 void solve() {
-    ll n , s; cin >> n >> s;
+    ll n ,s; cin >> n >> s;
     vl a(n);
-    rep(i , 0 , n ) cin >> a[i];
-    ll left = 0 , sum = 0 , ans = 0;
-    for(int right =0 ; right < n ; right++) 
+    rep(i , 0 , n) cin >>a[i];
+    // stack<ll> f ,b, fmax , fmin , bmax, bmin;
+    // ll left = 0 , diff = 0 , ans =0;
+    deque<int> mxd , mind;
+    ll ans =0;
+    int left = 0;
+    int right = 0;
+    for(right = 0 ; right < n ; right++) 
     {
-        sum += a[right];
-        while(sum - a[left] >= s) {
-            sum -= a[left++];
-        }
-        if(sum >=s) 
+        // update the max deque 
+        while(!mxd.empty() && a[mxd.back()] <= a[right])
         {
-            ans+= left+1;
+            mxd.pop_back();
         }
+        mxd.push_back(right);
+        // update the min deque:
+        while(!mind.empty() && a[mind.back()] >= a[right]){
+            mind.pop_back();
+        }
+        mind.push_back(right);
+
+
+        while(left <= right && a[mxd.front()] - a[mind.front()] > s)
+        {
+            left++;
+
+            // remove the elements that are no longer in the window 
+            while (!mxd.empty() && mxd.front() < left )
+            {
+                mxd.pop_front();
+            }
+            while(!mind.empty() && mind.front() < left){
+                mind.pop_front();
+            }
+        }
+        ans += (right - left +1);
     }
     cout << ans << endl;
-}
+};
+
 
 int main() {
     fastIO();
