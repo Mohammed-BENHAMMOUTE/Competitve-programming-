@@ -88,8 +88,6 @@ void solve() {
     }
     cout<< ans << endl;
 
-
-
 }
 
 int main() {

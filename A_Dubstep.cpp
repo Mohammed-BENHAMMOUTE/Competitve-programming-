@@ -1,7 +1,6 @@
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
+#include <cwchar>
 using namespace std;
-
 void solve() {
     string str;
     cin >> str;
