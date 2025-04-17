@@ -9,14 +9,15 @@ using namespace std;
 typedef long long ll;
 
 const int MAXE = 100005;
-vector<vector<int>> devisors(MAXE);
+vector<vector<int>> divisors(MAXE);
 bool precomputed = false;
 
 void precompute_Div() {
-    if(precomputed) return;
+    if (precomputed) return;
+    // For each number multiple, add its divisor d.
     for (int d = 1; d < MAXE; d++) {
         for (int multiple = d; multiple < MAXE; multiple += d) {
-            devisors[multiple].push_back(d);
+            divisors[multiple].push_back(d);
         }
     }
     precomputed = true;
@@ -32,43 +33,40 @@ void solve() {
     sort(a.begin(), a.end());
 
     int left = 0;
-    int distinct_count = 0; 
-    // Using size MAXE to cover all divisors up to MAXE-1 (divisor values)
-    vector<int> remainder_counts(MAXE, 0);
-    ll ans = LLONG_MAX; 
+    int distinct_count = 0;
+    // Only need counts for divisors 1..m.
+    vector<int> remainder_counts(m+1, 0);
+    ll ans = LLONG_MAX;
 
-    // Sliding window: move right pointer
     for (int right = 0; right < n; right++) {
-        // Add a[right] to the window:
-        // For each divisor of a[right], update the count
-        for (const int& x : devisors[a[right]]) {
-            if (remainder_counts[x] == 0) {
-                distinct_count++;
+        // For each divisor of a[right], if it's in [1, m], update its count.
+        for (const int &x : divisors[a[right]]) {
+            if (x <= m) {
+                if (remainder_counts[x] == 0)
+                    distinct_count++;
+                remainder_counts[x]++;
             }
-            remainder_counts[x]++;
         }
         
-        // Shrink window from left while condition is satisfied:
-        // We want the window to have all divisors 1..m present.
-        // Here, we assume the condition is "distinct_count == m"
+        // While the current window [left, right] contains all divisors 1..m:
         while (distinct_count == m && left <= right) {
             ans = min(ans, a[right] - a[left]);
             // Remove a[left] from the window:
-            for (const int& x : devisors[a[left]]) {
-                remainder_counts[x]--;
-                if (remainder_counts[x] == 0) {
-                    distinct_count--;
+            for (const int &x : divisors[a[left]]) {
+                if (x <= m) {
+                    remainder_counts[x]--;
+                    if (remainder_counts[x] == 0)
+                        distinct_count--;
                 }
             }
             left++;
         }
     }
     
-    if (ans == LLONG_MAX) {
+    if (ans == LLONG_MAX)
         printf("-1\n");
-    } else {
+    else
         printf("%lld\n", ans);
-    }
 }
 
 int main(int argc, char *argv[]) {
