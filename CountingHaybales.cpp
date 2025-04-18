@@ -14,26 +14,27 @@ void solve()
   {
     cin >> x;
   };
-  sort(a.begin() , a.end());
-
-  auto atMost = [&](ll x) {
-    int l = 0 , r = n-1;
-    int mid = 0;
-    while(l < r){
-      mid = l + (r - l)/2; // mid = (l + r)/2;
-      if(a[mid] >= x){
-        r = mid;
+  auto atMost = [&] (int x)
+  {
+    int l = 0, r = n-1;
+    int result = -1;
+    while(l <= r)
+    {
+      ll mid = l + (r - l)/2;
+      if(a[mid] <= x){
+        result = mid;
+        l = mid + 1;
       }else{
-        l = mid +1;
+        r = mid - 1;
       }
     }
-    return r;
+    return (result == -1 ? 0 : result + 1);
   };
-
-
-  for(int i =0 ; i < q; i++){
-    ll left, right; cin >> left >> right;
-    cout << atMost(right) - atMost(left -1) << "\n";
+  sort(a.begin() , a.end());
+  for(int i = 0; i < q; i++) 
+  {
+    int left, right; cin >> left >> right;
+    cout << atMost(right) - atMost(left - 1) << endl;
   }
 }
 
@@ -44,7 +45,6 @@ int main()
   cin.tie(NULL);
   cout.tie(NULL);
   int t = 1;
-  cin >> t;
   while(t--){
     solve();
   }
