@@ -2,7 +2,7 @@
 #include <functional>
 using namespace std;
 
-int last_true(int lo , int hi , function<bool<int>> f)
+int last_true(int lo , int hi , function<bool(int)> f)
 {
   // if none of the value works, then we return that last last
   lo--;
@@ -14,11 +14,37 @@ int last_true(int lo , int hi , function<bool<int>> f)
     {
       lo = mid;
     } else{
-      ho = mid -1;
+      hi = mid -1;
     }
   };
   return lo;
 }
+
+
+
+// a second implementation requires using p=binary jumping, which is easier in implementation than the usual binary search:
+
+
+int last_True_2(int l , int r , function<bool(int)> f)
+{
+  l--;
+
+  for(int diff = r -l; l + diff <= r ; diff/=2)
+  {
+    while(diff+ l <= r && f(diff + r)){r+=diff;}
+  }
+  return l;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
