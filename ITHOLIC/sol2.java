@@ -23,9 +23,6 @@ public class sol2 {
             }
             curr-- ; 
         }
-
-
         System.out.println( new String(chars) ) ; 
-        
        }
 }
