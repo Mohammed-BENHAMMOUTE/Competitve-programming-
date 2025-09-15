@@ -67,54 +67,65 @@ void fastIO() {
         freopen("error.txt", "w", stderr);
     #endif
 }
-bool found = false;
 vector<int> parent;
 vector<int> cycle_path;
 
-
 bool dfs(int u, int p, vector<bool>& visited, vector<vector<int>>& adj) {
-    parent[u] = p;
     visited[u] = true;
-
-    for (auto v : adj[u]) {
-        if (v == p) continue;
-
-        if (!visited[v]){
-            if (dfs(v, u, visited, adj)) return true;
-        }else{
-            // found a cycle:
+    parent[u] = p;
+    
+    for (int v : adj[u]) {
+        if (v == p) continue; // Skip parent to avoid immediate back-tracking
+        
+        if (!visited[v]) {
+            // Continue DFS on unvisited neighbor
+            if (dfs(v, u, visited, adj)) {
+                return true;
+            }
+        } else {
+            // Found a back edge - this creates a cycle
             cycle_path.clear();
+            
+            // Reconstruct the cycle path from u back to v
             int curr = u;
-
-            while (curr != v)
-            {
+            while (curr != v) {
                 cycle_path.push_back(curr);
                 curr = parent[curr];
             }
             cycle_path.push_back(v);
-            cycle_path.push_back(u);
+            cycle_path.push_back(u); // Complete the cycle
+            
             return true;
         }
     }
+    
     return false;
 }
 
 
 void solve() {
-    int n,m; cin >> n >> m;
-    parent.assign(n+1, -1);
-    vector<vector<int>> adj(n+1);
-    vector<bool> visited(n+1, false);
-    for (int i =0 ;i < m; i++){
-        int a, b; cin >> a >> b;
+    int n, m; 
+    cin >> n >> m;
+    
+    // Initialize data structures
+    parent.assign(n + 1, -1);
+    vector<vector<int>> adj(n + 1);
+    vector<bool> visited(n + 1, false);
+    
+    // Read edges and build adjacency list
+    for (int i = 0; i < m; i++) {
+        int a, b; 
+        cin >> a >> b;
         adj[a].push_back(b);
         adj[b].push_back(a);
     }
 
-    for (int i = 1; i < n; i++) {
+    // Try to find a cycle starting from each unvisited node
+    for (int i = 1; i <= n; i++) {
         if (!visited[i]) {
             if (dfs(i, -1, visited, adj)) {
-                cout << cycle_path.size() << endl;
+                // Cycle found - output the result
+                cout << cycle_path.size() << "\n";
                 for (int node : cycle_path) {
                     cout << node << " ";
                 }
@@ -123,6 +134,8 @@ void solve() {
             }
         }
     }
+    
+    // No cycle found
     cout << "IMPOSSIBLE\n";
 }
 
